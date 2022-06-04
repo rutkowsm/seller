@@ -18,12 +18,12 @@ public class SellerService {
 
     private static final String RESOURCE_URL = "http://localhost:8080/musicstore";
 
-    public ResponseEntity<String> getInstrument(Long id){
-        return restTemplate.getForEntity(RESOURCE_URL + "/findinstrument/" + id, String.class);
+    public Instrument getInstrument(Long id){
+        return restTemplate.getForObject(RESOURCE_URL + "/findinstrument/" + id, Instrument.class);
     }
 
-    public ResponseEntity<String> makeInstrumentAvailable(Long id){
-        return restTemplate.getForEntity(RESOURCE_URL + "/setavailable/" + id, String.class);
+    public Instrument makeInstrumentAvailable(Long id){
+        return restTemplate.getForObject(RESOURCE_URL + "/setavailable/" + id, Instrument.class);
     }
 
     HttpEntity<Instrument> request = new HttpEntity<>(new Instrument());
