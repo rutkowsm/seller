@@ -10,22 +10,29 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class SellerService {
 
-    private final RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     public SellerService(RestTemplate restTemplate){
         this.restTemplate = restTemplate;
     }
 
-    private static final String RESOURCE_URL = "http://localhost:8080/musicstore/getinstruments";
+    private static final String RESOURCE_URL = "http://localhost:8080/musicstore";
 
     public ResponseEntity<String> getInstrument(Long id){
-        return restTemplate.getForEntity(RESOURCE_URL + "/" + id, String.class);
+        return restTemplate.getForEntity(RESOURCE_URL + "/findinstrument/" + id, String.class);
+    }
+
+    public ResponseEntity<String> makeInstrumentAvailable(Long id){
+        return restTemplate.getForEntity(RESOURCE_URL + "/setavailable/" + id, String.class);
     }
 
     HttpEntity<Instrument> request = new HttpEntity<>(new Instrument());
 
     ResponseEntity<Instrument> getInstrument = restTemplate
             .exchange(RESOURCE_URL, HttpMethod.GET, request, Instrument.class);
+
+    ResponseEntity<Instrument> makeInstrumentAvailable = restTemplate
+            .exchange(RESOURCE_URL,HttpMethod.POST, request, Instrument.class);
 
 
 
